@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo-Liste</title>
+    <meta name="description" content="Übung aus udemy online-Kurs">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="shortcut icon" href="#">
+    <script type="module" src="./src/app.ts"></script>
+</head>
+
+<body>
+    <main class="w3-panel">
+        <div class="w3-input w3-border" id="divInput">
+            <label class="w3-text-blue" for="task">Neue Aufgabe</label>
+            <input type="text" name="task" id="inputTask" placeholder="Neue Aufgabe">
+            <button class="w3-button w3-circle w3-green" id="btnAddOne">+</button>
+        </div>
+        <ul class="w3-ul w3-border">
+        </ul>
+        <div class="w3-container w3-border">
+            <button class="w3-panel w3-btn w3-blue-grey" id="btnClearAll">Alle Löschen</button>
+            <button class="w3-panel w3-btn w3-blue-grey" id="btnClearDone">Erledigte Löschen</button>
+        </div>
+    </main>
+</body>
+
+</html>
