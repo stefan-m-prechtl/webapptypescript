@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "rootDir": "./src",
     "outDir": "dist",
     "target": "ES2022",
     "useDefineForClassFields": true,
@@ -10,10 +11,13 @@
       "DOM.Iterable"
     ],
     "skipLibCheck": true,
+    /* JS handling */
+    "allowJs": true,
+
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
-    "isolatedModules": true,
+    "isolatedModules": false, // PRS true,
     "moduleDetection": "force",
     "noEmit": true,
     /* Linting */

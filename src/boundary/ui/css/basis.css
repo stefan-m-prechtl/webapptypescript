@@ -1,0 +1,97 @@
+/* ==========================================================
+- Allgemeine Basis-Einstellungen
+- Grundlegende Schrift-/Textgestaltung
+- Typselektoren und allgemeine Klassen
+============================================================= */
+
+/* ---------------------------------------------------------
+    Allgemeine Einstellungen 
+----------------------------------------------------------*/
+
+/* "Verhalten" der Kästchen vom Default umstellen auf Borderbox */
+*,
+*::before,
+*::after {
+   box-sizing: border-box;
+}
+
+/* Sanftes Scrollen innerhalb einer Seite */
+html {
+   scroll-behavior: smooth;
+}
+
+/* "Collapsing-Margins" unterbinden */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+blockquote {
+   margin-top: 0;
+}
+
+/* ---------------------------------------------------------
+      Grundlegende Schrift-/Textgestaltung
+  ----------------------------------------------------------*/
+
+/* für Browser mit 16pX Defaultgröße: 1rem = 1o pixel */
+html {
+   font-size: 62.5%;
+}
+
+body {
+   font-size: 1.6rem;
+   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+   font-weight: 300;
+}
+
+/* Überschriften */
+
+h1 {
+   font-size: 2.6rem;
+}
+
+h2 {
+   font-size: 2.2rem;
+}
+
+h3 {
+   font-size: 2rem;
+}
+
+h4 {
+   font-size: 1.75rem;
+}
+
+h5 {
+   font-size: 1.5rem;
+}
+
+h6 {
+   font-size: 1rem;
+   font-variant: small-caps;
+}
+
+/* Bilder - Allgemein */
+figcaption {
+   font-size: 1.2rem;
+}
+
+figure {
+   position: relative;
+   border: 5px solid silver;
+   margin: 3px;
+   max-width: 100%;
+}
+
+figure img {
+   display: block;
+   max-width: 100%;
+   height: auto;
+   margin-bottom: 2rem;
+   padding: 5px;
+}

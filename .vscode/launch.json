@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Firefox and Debug Vite",
+            "type": "firefox",
+            "request": "launch",
+            "url": "http://localhost:5174",
+            "webRoot": "${workspaceFolder}",
+             "profile": "default-release"
+        }
+    ]
+}

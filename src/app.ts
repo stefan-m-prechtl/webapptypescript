@@ -1,33 +1,29 @@
-import { v4 as uuidV4 } from "uuid"
+import AuthService from "./boundary/rest/authService.ts";
+import ServiceUser from "./boundary/rest/serviceUser.ts";
 
-document.addEventListener("DOMContentLoaded", main)
+// @ts-ignore
+import { initNavigation, initRouting, selectPage } from "./boundary/ui/navigation";
+import Model from "./boundary/ui/userModel.ts";
+import Presenter from "./boundary/ui/userPresenter.ts";
+import View from "./boundary/ui/userView.ts";
 
-type Task = {
-    id: string
-    title: string
+
+
+// Event-Listener: Event feuert, wenn DOM-Baum vollständig geladen ist
+document.addEventListener("DOMContentLoaded", init)
+
+function init() {
+
+    initNavigation();
+    initRouting();
+
+    // tmp
+    const model = new Model();
+    const view = new View("#user");
+    const presenter = new Presenter(view, model);
+
+    // Startseite aktivieren
+    selectPage(window.location.search);
+
 }
 
-
-function main() {
-    let inputElem = document.querySelector<HTMLInputElement>("#inputTask");
-
-    inputElem?.addEventListener("keyup", (event) => {
-        event.preventDefault()
-        if (event.key === 'Enter') {
-            let content = inputElem.value as string;
-            if (content !== "") {
-                addTask(content)
-                inputElem.value = ""
-            }
-        }
-    });
-
-    function addTask(content: string) {
-        const createdTask: Task = {
-            id: uuidV4(),
-            title: content
-        }
-        console.log(createdTask)
-
-    }
-}

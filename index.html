@@ -6,26 +6,97 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToDo-Liste</title>
-    <meta name="description" content="Übung aus udemy online-Kurs">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="src/boundary/ui/css/style.css" />
+    <meta name="description" content="Typescript RextNG">
     <link rel="shortcut icon" href="#">
+    <script type="module" scr="./src/boundary/ui/navigation.js"></script>
     <script type="module" src="./src/app.ts"></script>
 </head>
 
 <body>
-    <main class="w3-panel">
-        <div class="w3-input w3-border" id="divInput">
-            <label class="w3-text-blue" for="task">Neue Aufgabe</label>
-            <input type="text" name="task" id="inputTask" placeholder="Neue Aufgabe">
-            <button class="w3-button w3-circle w3-green" id="btnAddOne">+</button>
-        </div>
-        <ul class="w3-ul w3-border">
+    <header class="site-header">
+        <h1>Typescript Rext NG</h1>
+    </header>
+    <nav class="site-nav">
+        <button id="nav_button">&#9776; Menü</button>
+        <ul>
+            <li><a class="nav_link nav_current_link" href="start">Start</a></li>
+            <li><a class="nav_link" href="user">Benutzer</a></li>
+            <li><a class="nav_link" href="project">Projekte</a></li>
+            <li><a class="nav_link" href="item">Items</a></li>
+            <li><a class="nav_link" href="admin">Administration</a></li>
         </ul>
-        <div class="w3-container w3-border">
-            <button class="w3-panel w3-btn w3-blue-grey" id="btnClearAll">Alle Löschen</button>
-            <button class="w3-panel w3-btn w3-blue-grey" id="btnClearDone">Erledigte Löschen</button>
+    </nav>
+    <main class="site-content">
+
+        <div class="virtualpage" id="start">
+            <button id="btnLogin">Login</button>
+            <button id="btnLoadUsers">Load Users</button>
+        </div>
+
+        <div class="virtualpage hideDiv" id="user">
+            <header>
+                <h1>Benutzer</h1>
+            </header>
+            <p>
+                <button id="btnLoad">Aktualisieren</button>
+                <button id="btnClear">Leeren</button>
+                <table id="tblUser">
+                    <thead>
+                        <tr>
+                            <th>Kennung</th>
+                            <th>Vorname</th>
+                            <th>Nachname</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>prs</th>
+                            <th>Stefan</th>
+                            <th>Prechtl</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </p>
+        </div>
+
+        <div class="virtualpage hideDiv" id="project">
+            <header>
+                <h1>Projekte</h1>
+            </header>
+            <p>
+                Fehlender Content für Projektverwaltung
+            </p>
         </div>
     </main>
+
+
+    <aside class="site-aside">
+
+        <div id="start-aside" class="virtualpage hideDiv">
+            <header>Start Aside</header>
+            <p>Lorem ipsum</p>
+        </div>
+
+        <div id="user-aside" class="virtualpage hideDiv">
+            <header>User Aside</header>
+            <p>Lorem ipsum</p>
+        </div>
+
+        <div id="project-aside" class="virtualpage hideDiv">
+            <header>Project Aside</header>
+            <p>Lorem ipsum</p>
+        </div>
+    </aside>
+
+    <footer class="site-footer">
+        <!-- Hyperlink zur ID "top" auf dieser Seite -->
+        <a href="#top">nach oben</a>
+        <nav id="footer-nav">
+            <li><a class="nav_link" href="contact">Kontakt</a></li>
+            <li><a class="nav_link" href="impressum">Impressum</a></li>
+        </nav>
+    </footer>
 </body>
 
 </html>
