@@ -36,28 +36,32 @@
 
         <div class="virtualpage hideDiv" id="user">
             <header>
-                <h1>Benutzer</h1>
+                <h1>Benutzerverwaltung</h1>
             </header>
-            <p>
-                <button id="btnLoad">Aktualisieren</button>
-                <button id="btnClear">Leeren</button>
-                <table id="tblUser">
+            <div>
+                <div class="w3-panel">
+                <button class="w3-btn w3-light-gray w3-round" id="btnLoad">Aktualisieren</button>
+                <button class="w3-btn w3-light-gray w3-round" id="btnClear">Leeren</button>
+                </div>
+                <div class="w3-panel">
+                <table class="w3-table w3-bordered w3-hoverable" id="tblUser">
                     <thead>
-                        <tr>
+                        <tr class="w3-light-gray">
                             <th>Kennung</th>
                             <th>Vorname</th>
                             <th>Nachname</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr class="w3-hover-dark-grey">
                             <th>prs</th>
                             <th>Stefan</th>
                             <th>Prechtl</th>
                         </tr>
                     </tbody>
                 </table>
-            </p>
+                </div>
+            </div>
         </div>
 
         <div class="virtualpage hideDiv" id="project">
