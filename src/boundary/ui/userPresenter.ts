@@ -23,10 +23,22 @@ export default class Presenter {
     async load() {
         const service = new ServiceUser(this.baseURL);
         const result = await service.getAll();
+
         this.view.show(result);
             result.forEach((user): void => {
+                this.model.addUser(user);
                 console.log(user.toJson());
             });
+    }
+
+    handleTableRowSelected(userid: string) {
+        console.log(`User with id ${userid} was selected` );
+        this.model.selectUser(Number(userid));
+
+        if (this.model.selectedUser)
+        {
+            this.view.showCurrentUser(this.model.selectedUser);
+        }
     }
 
 }
