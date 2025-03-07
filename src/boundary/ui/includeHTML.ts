@@ -10,6 +10,11 @@ export default class IncludeHTML extends HTMLElement {
                 const response = await fetch(file);
                 if (!response.ok) throw new Error(`Failed to load ${file}`);
                 this.innerHTML = await response.text();
+
+                console.log(`included ${file}`)
+                document.dispatchEvent(new Event(file));
+
+
             } catch (error) {
                 console.error(error);
             }

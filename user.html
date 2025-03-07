@@ -1,0 +1,52 @@
+<header>
+    <h1>Benutzerverwaltung</h1>
+</header>
+<div>
+    <div class="w3-panel">
+        <button class="w3-btn w3-light-gray w3-round" id="btnLoad">Aktualisieren</button>
+        <button class="w3-btn w3-light-gray w3-round" id="btnClear">Leeren</button>
+    </div>
+    <div class="w3-panel w3-bar" id="actions" hidden>
+        <a href="#" class="w3-bar-item w3-button w3-grey" id="actionEdit">Bearbeiten</a>
+        <a href="#" class="w3-bar-item w3-button w3-grey" id="actionDelete">Löschen</a>
+    </div>
+    <div class="w3-panel">
+        <table class="w3-table w3-bordered" id="tblUser">
+            <thead>
+                <tr class="w3-light-gray">
+                    <th><input type="checkbox" id="selectAll"></th>
+                    <th>Kennung</th>
+                    <th>Vorname</th>
+                    <th>Nachname</th>
+                </tr>
+            </thead>
+            <tbody id="tblBody">
+            </tbody>
+        </table>
+    </div>
+    <div id="editdialog" class="w3-modal">
+        <div class="w3-modal-content w3-card-4">
+            <header class="w3-container w3-light-blue">
+                <span onclick="document.getElementById('editdialog').style.display='none'"
+                    class="w3-button w3-display-topright">&times;</span>
+                <h1 class="w3-margin-top">Benutzer bearbeiten</h1>
+            </header>
+            <div class="w3-container">
+                <form class="w3-container w3-margin-top w3-margin-bottom" action="">
+                    <label><b>Kennung</b></label>
+                    <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Kennung eingeben"
+                        name="name">
+                    <label><b>Vorname</b></label>
+                    <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Vorname eingeben"
+                        name="firstname">
+                    <label><b>Nachname</b></label>
+                    <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Nachname eingeben"
+                        name="lastname">
+                    <button type="button" class="w3-button w3-hover-black w3-light-grey">Ok</button>
+                    <button type="button" class="w3-button w3-hover-black w3-light-grey">Abbrechen</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

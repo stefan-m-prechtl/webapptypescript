@@ -16,7 +16,7 @@
 
 <body>
     <header class="site-header">
-        <h1>Typescript Rext NG</h1>
+        <h1>SMP-Item-Manager</h1>
     </header>
     <nav class="site-nav">
         <button id="nav_button">&#9776; Menü</button>
@@ -31,53 +31,23 @@
     <main class="site-content">
 
         <div class="virtualpage" id="start">
-            <button id="btnLogin">Login</button>
-            <button id="btnLoadUsers">Load Users</button>
+            <include-html src="start.html"></include-html>
         </div>
 
         <div class="virtualpage hideDiv" id="user">
-            <header>
-                <h1>Benutzerverwaltung</h1>
-            </header>
-            <div>
-                <div class="w3-panel">
-                    <button class="w3-btn w3-light-gray w3-round" id="btnLoad">Aktualisieren</button>
-                    <button class="w3-btn w3-light-gray w3-round" id="btnClear">Leeren</button>
-                </div>
-                <div class="w3-panel w3-bar" id="actions" hidden>
-                    <a href="#" class="w3-bar-item w3-button w3-grey" id="actionEdit">Bearbeiten</a>
-                    <a href="#" class="w3-bar-item w3-button w3-grey" id="actionDelete">Löschen</a>
-                </div>
-                <div class="w3-panel">
-                    <table class="w3-table w3-bordered" id="tblUser">
-                        <thead>
-                            <tr class="w3-light-gray">
-                                <th><input type="checkbox" id="selectAll"></th>
-                                <th>Kennung</th>
-                                <th>Vorname</th>
-                                <th>Nachname</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tblBody">
-                        </tbody>
-                    </table>
-                </div>
-                <div id="editdialog" class="w3-modal">
-                    <div class="w3-modal-content">
-                        <div class="w3-container">
-                            <span onclick="document.getElementById('editdialog').style.display='none'"
-                                class="w3-button w3-display-topright">&times;</span>
-                            <p>Some text. Some text. Some text.</p>
-                            <p>Some text. Some text. Some text.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+            <include-html src="user.html"></include-html>
         </div>
 
         <div class="virtualpage hideDiv" id="project">
             <include-html src="project.html"></include-html>
+        </div>
+
+        <div class="virtualpage hideDiv" id="item">
+            <include-html src="item.html"></include-html>
+        </div>
+
+        <div class="virtualpage hideDiv" id="admin">
+            <include-html src="admin.html"></include-html>
         </div>
     </main>
 
@@ -85,17 +55,23 @@
     <aside class="site-aside">
 
         <div id="start-aside" class="virtualpage hideDiv">
-            <header>Start Aside</header>
-            <p>Lorem ipsum</p>
+            <include-html src="start-aside.html"></include-html>
         </div>
 
         <div id="user-aside" class="virtualpage hideDiv">
-            <header>User Aside</header>
-            <p>Lorem ipsum</p>
+            <include-html src="user-aside.html"></include-html>
         </div>
 
         <div id="project-aside" class="virtualpage hideDiv">
             <include-html src="project-aside.html"></include-html>
+        </div>
+
+        <div id="item-aside" class="virtualpage hideDiv">
+            <include-html src="item-aside.html"></include-html>
+        </div>
+
+        <div id="admin-aside" class="virtualpage hideDiv">
+            <include-html src="admin-aside.html"></include-html>
         </div>
     </aside>
 
