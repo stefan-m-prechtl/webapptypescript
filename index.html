@@ -11,6 +11,7 @@
     <link rel="shortcut icon" href="#">
     <script type="module" scr="./src/boundary/ui/navigation.js"></script>
     <script type="module" src="./src/app.ts"></script>
+    <script type="module" src="./src/boundary/ui/includeHTML.ts"></script>
 </head>
 
 <body>
@@ -43,9 +44,9 @@
                     <button class="w3-btn w3-light-gray w3-round" id="btnLoad">Aktualisieren</button>
                     <button class="w3-btn w3-light-gray w3-round" id="btnClear">Leeren</button>
                 </div>
-                <div class="w3-panel w3-bar" id="actions">
-                    <a href="#" class="w3-bar-item w3-button w3-grey">Bearbeiten</a>
-                    <a href="#" class="w3-bar-item w3-button w3-grey">Löschen</a>
+                <div class="w3-panel w3-bar" id="actions" hidden>
+                    <a href="#" class="w3-bar-item w3-button w3-grey" id="actionEdit">Bearbeiten</a>
+                    <a href="#" class="w3-bar-item w3-button w3-grey" id="actionDelete">Löschen</a>
                 </div>
                 <div class="w3-panel">
                     <table class="w3-table w3-bordered" id="tblUser">
@@ -61,17 +62,22 @@
                         </tbody>
                     </table>
                 </div>
+                <div id="editdialog" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <div class="w3-container">
+                            <span onclick="document.getElementById('editdialog').style.display='none'"
+                                class="w3-button w3-display-topright">&times;</span>
+                            <p>Some text. Some text. Some text.</p>
+                            <p>Some text. Some text. Some text.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         </div>
 
         <div class="virtualpage hideDiv" id="project">
-            <header>
-                <h1>Projekte</h1>
-            </header>
-            <p>
-                Fehlender Content für Projektverwaltung
-            </p>
+            <include-html src="project.html"></include-html>
         </div>
     </main>
 
@@ -89,8 +95,7 @@
         </div>
 
         <div id="project-aside" class="virtualpage hideDiv">
-            <header>Project Aside</header>
-            <p>Lorem ipsum</p>
+            <include-html src="project-aside.html"></include-html>
         </div>
     </aside>
 

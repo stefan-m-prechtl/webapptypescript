@@ -7,7 +7,6 @@ import Model from "./boundary/ui/userModel.ts";
 import Presenter from "./boundary/ui/userPresenter.ts";
 import View from "./boundary/ui/userView.ts";
 
-
 // Event-Listener: Event feuert, wenn DOM-Baum vollständig geladen ist
 document.addEventListener("DOMContentLoaded", init)
 

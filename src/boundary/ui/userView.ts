@@ -37,6 +37,8 @@ export default class View {
         const btnClear = document.querySelector<HTMLButtonElement>("#btnClear")!;
         const chkSelectAll = document.querySelector<HTMLInputElement>('#selectAll')!;
 
+        const actionEdit =document.querySelector<HTMLButtonElement>("#actionEdit")!;
+
         btnLoad.addEventListener("click", () => {
             this.presenter?.load();
         });
@@ -51,8 +53,27 @@ export default class View {
                 checkbox.checked = chkSelectAll.checked;
                 checkbox.closest("tr")?.classList.toggle("selectedRow", chkSelectAll.checked);
             });
+            this.updateActionMenu(checkboxes);
+        });
+
+        actionEdit.addEventListener("click", () => {
+            const editDialog = document.querySelector<HTMLButtonElement>("#editdialog")!;
+            editDialog.style.display = "block"; 
         });
     }
+
+    updateActionMenu(checkboxes: NodeListOf<HTMLInputElement>) {
+
+        const actionsMenu = document.querySelector("#actions")!;
+
+        const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+        if (anyChecked) {
+            actionsMenu.removeAttribute("hidden");
+        } else {
+            actionsMenu.setAttribute("hidden", "true");
+        }
+    }
+
 
     clear() {
         render(html``, this.tblBody);
@@ -81,7 +102,29 @@ export default class View {
                 if (row) {
                     row.classList.toggle("selectedRow", target.checked);
                 }
-                //updateMenu();
+
+                const chkSelectAll = document.querySelector<HTMLInputElement>('#selectAll')!;
+                const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+                if (allChecked) {
+                    
+                    chkSelectAll.checked = true;
+                    chkSelectAll.indeterminate=false;
+                }
+                else {
+                    const noneChecked = Array.from(checkboxes).every(checkbox => !checkbox.checked);
+                    if (noneChecked) {
+                        chkSelectAll.checked = false;
+                        chkSelectAll.indeterminate=false;
+                    }
+                    else
+                    {
+                        chkSelectAll.checked = false;
+                        chkSelectAll.indeterminate=true;
+                    }
+                }
+
+
+                this.updateActionMenu(checkboxes);
             });
         });
     }
