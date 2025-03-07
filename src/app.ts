@@ -19,7 +19,7 @@ function init() {
     // tmp
     const model = new Model();
     const view = new View("#user");
-    const presenter = new Presenter(view, model);
+    new Presenter(view, model);
 
     // Startseite aktivieren
     selectPage(window.location.search);

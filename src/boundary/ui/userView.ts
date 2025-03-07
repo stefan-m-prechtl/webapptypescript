@@ -35,6 +35,7 @@ export default class View {
     initEventHandler() {
         const btnLoad = document.querySelector<HTMLButtonElement>("#btnLoad")!;
         const btnClear = document.querySelector<HTMLButtonElement>("#btnClear")!;
+        const chkSelectAll = document.querySelector<HTMLInputElement>('#selectAll')!;
 
         btnLoad.addEventListener("click", () => {
             this.presenter?.load();
@@ -44,17 +45,12 @@ export default class View {
             this.presenter?.clear();
         });
 
-        this.tblBody.addEventListener("click", (e) => {
-            const row = (e.target as HTMLElement).closest('tr');
-            if (row) {
-                // Remove w3-selected class from all rows
-                document.querySelectorAll("tbody tr").forEach(tr => tr.classList.remove("w3-select"));
-                // selected class to the clicked row
-                row.classList.add("w3-select");
-
-                this.presenter?.handleTableRowSelected(`${row.dataset.id}`);
-
-            }
+        chkSelectAll.addEventListener("change", () => {
+            const checkboxes = document.querySelectorAll<HTMLInputElement>(".row-checkbox");
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = chkSelectAll.checked;
+                checkbox.closest("tr")?.classList.toggle("selectedRow", chkSelectAll.checked);
+            });
         });
     }
 
@@ -66,11 +62,28 @@ export default class View {
 
         const templateTable = (users: User[]) => html`
                 ${users.map(user => html`<tr data-id="${user.id}">
+                    <td><input type="checkbox" class="row-checkbox"></td>
                     <td>${user.name}</td>
                     <td>${user.firstname}</td>
                     <td>${user.lastname}</td>
                 </tr>`)}`;
         render(templateTable(users), this.tblBody);
+        this.attachRowEventListeners();
+    }
+
+    attachRowEventListeners() {
+        const checkboxes = document.querySelectorAll<HTMLInputElement>(".row-checkbox");
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener("change", (e) => {
+                const target = e.target as HTMLInputElement;
+                const row = target.closest("tr");
+                if (row) {
+                    row.classList.toggle("selectedRow", target.checked);
+                }
+                //updateMenu();
+            });
+        });
     }
 
     showCurrentUser(user: User) {

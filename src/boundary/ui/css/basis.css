@@ -95,3 +95,9 @@ figure img {
    margin-bottom: 2rem;
    padding: 5px;
 }
+
+
+/* Selektierte Tabellenzeile */
+.selectedRow {
+    background: hsl(194, 86%, 51%);
+}
