@@ -1,7 +1,7 @@
 import { User } from "../../domain/user";
+import UserComponentEdit from "./user.component.edit";
 import Presenter from "./userPresenter";
-import { html, render } from "lit-html";
-import { templateContent } from "lit-html/directives/template-content.js";
+import { html, render } from "lit";
 
 type NullableHtmlElement = HTMLElement | null;
 
@@ -23,7 +23,10 @@ export default class View {
     this.presenter = presenter;
   }
 
-  initView() {}
+  initView() {
+    const uce = new UserComponentEdit();
+    uce.version ="1.1.0";
+  }
 
   initEventHandler() {
     const btnLoad = document.querySelector<HTMLButtonElement>("#btnLoad")!;
@@ -36,6 +39,8 @@ export default class View {
 
     btnLoad.addEventListener("click", () => {
       this.presenter?.load();
+      const uce= document.querySelector("user-edit") as UserComponentEdit;
+      uce.version="2.0";
     });
 
     btnClear.addEventListener("click", () => {
@@ -134,14 +139,7 @@ export default class View {
 
   showEditUser(user: User) {
     console.log(`Current User: id=${user.id}, name=${user.name}`);
-
-    const htmlTemplate = document.querySelector(
-      "#testtemplate"
-    ) as HTMLTemplateElement;
-    //const htmlCode = "<h1>Current User</h1><p>User: ${user.name}</p><p>Nachname: ${user.lastname}</p>";
-    const htmlCode = htmlTemplate.innerHTML;
-    const litTemplate = (user: User) => html`${eval("html`" + htmlCode + "`")}`;
-    const div = document.querySelector("#testdiv") as HTMLElement;
-    render(litTemplate(user), div);
   }
+  
+
 }

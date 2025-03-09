@@ -3,7 +3,8 @@
     "rootDir": "./src",
     "outDir": "dist",
     "target": "ES2022",
-    "useDefineForClassFields": true,
+    "useDefineForClassFields": false,
+    "experimentalDecorators": true,
     "module": "ES2022",
     "lib": [
       "ES2022",
