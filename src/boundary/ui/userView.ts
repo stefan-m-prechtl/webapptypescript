@@ -1,8 +1,7 @@
-import { User } from "../../domain/user";
-import UserComponentEdit from "./user.component.edit";
-import UserComponentList from "./user.component.list";
-import Presenter from "./userPresenter";
-import { html, render } from "lit";
+import { User } from '../../domain/user';
+import UserComponentEdit from './user.component.edit';
+import UserComponentList from './user.component.list';
+import Presenter from './userPresenter';
 
 type NullableHtmlElement = HTMLElement | null;
 
@@ -15,7 +14,7 @@ export default class View {
     this.presenter = null;
 
     this.rootElement = document.querySelector<HTMLElement>(id)!;
-    this.tblBody = document.querySelector<HTMLTableElement>("#tblBody")!;
+    this.tblBody = document.querySelector<HTMLTableElement>('#tblBody')!;
   }
 
   setPresenter(presenter: Presenter) {
@@ -28,22 +27,18 @@ export default class View {
     const edit = new UserComponentEdit();
     edit.user = null;
 
-    const list = new UserComponentList();
-    list.users = [];
+    new UserComponentList([]);
   }
 
   initEventHandler() {
-    const btnLoad = document.querySelector<HTMLButtonElement>("#btnLoad")!;
-    const btnClear = document.querySelector<HTMLButtonElement>("#btnClear")!;
-    //const chkSelectAll = document.querySelector<HTMLInputElement>("#selectAll")!;
+    const btnLoad = document.querySelector<HTMLButtonElement>('#btnLoad')!;
+    const btnClear = document.querySelector<HTMLButtonElement>('#btnClear')!;
 
-    // const actionEdit = document.querySelector<HTMLButtonElement>("#actionEdit")!;
-
-    btnLoad.addEventListener("click", () => {
+    btnLoad.addEventListener('click', () => {
       this.presenter?.load();
     });
 
-    btnClear.addEventListener("click", () => {
+    btnClear.addEventListener('click', () => {
       this.presenter?.clear();
     });
 
@@ -78,14 +73,14 @@ export default class View {
   // }
 
   clear() {
-    render(html``, this.tblBody);
+    const listComponent: UserComponentList = document.querySelector<UserComponentList>('user-list')!;
+    listComponent.users = [];
   }
 
   show(users: User[]) {
     // this.attachRowEventListeners();
-    const uce: UserComponentList =
-      document.querySelector<UserComponentList>("user-list")!;
-    uce.users = users;
+    const listComponent: UserComponentList = document.querySelector<UserComponentList>('user-list')!;
+    listComponent.users = users;
   }
 
   // attachRowEventListeners() {
