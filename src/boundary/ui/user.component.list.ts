@@ -20,16 +20,47 @@ export default class UserComponentList extends LitElement {
   }
 
   handleClickTable(event: Event) {
-    console.log(event.target);
+    const target = event.target as HTMLElement;
+    let isChecked = false;
+
+    // Kein Klick auf Checkbox?
+    if (!(target instanceof HTMLInputElement && target.type === 'checkbox')) {
+      const row = target.closest('tr');
+      const checkbox = row?.querySelector('.row-checkbox') as HTMLInputElement;
+      checkbox.checked = !checkbox.checked;
+      isChecked = checkbox.checked;
+    } else {
+      const checkbox = target as HTMLInputElement;
+      isChecked = checkbox.checked;
+    }
+
+    console.log(`isChecked: ${isChecked}`);
+    this.updateActionMenu();
   }
 
   handleSelectAllClick(event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (target.id !== 'selectAll') return;
+
     const checkboxAll = event.target as HTMLInputElement;
     this.allSelected = checkboxAll.checked;
     const checkboxes = document.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
     checkboxes?.forEach((checkbox) => {
       checkbox.checked = this.allSelected;
     });
+
+    this.updateActionMenu();
+  }
+
+  updateActionMenu() {
+    const actionsMenu = document.querySelector('#actions')!;
+    const checkboxes = document.querySelectorAll('.row-checkbox');
+    const anyChecked = Array.from(checkboxes).some((checkbox) => (checkbox as HTMLInputElement).checked);
+    if (anyChecked) {
+      actionsMenu.removeAttribute('hidden');
+    } else {
+      actionsMenu.setAttribute('hidden', 'true');
+    }
   }
 
   render() {
