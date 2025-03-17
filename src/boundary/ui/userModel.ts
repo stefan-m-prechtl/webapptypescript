@@ -1,46 +1,45 @@
 import { User } from "../../domain/user";
 
 export default class Model {
+  private _allUser: User[];
+  private _selectedUser: User | null;
 
-    data: User[];
-    _selectedUser: User | null;
+  constructor() {
+    this._allUser = [];
+    this._selectedUser = null;
+  }
 
-    constructor() {
-        this.data = [];
-        this._selectedUser = null;
+  reset() {
+    this._allUser = [];
+  }
+
+  addUser(user: User): void {
+    this._allUser.push(user);
+  }
+
+  removeUser(user: User): void {
+    const index = this._allUser.findIndex((u) => u.id === user.id);
+    if (index !== -1) {
+      this._allUser.splice(index, 1);
     }
+  }
 
-    reset() {
-        this.data = [];
+  selectUser(userid: number) {
+    const user = this._allUser.find((u) => u.id === userid);
+    if (user) {
+      this._selectedUser = user;
     }
+  }
 
-    addUser(user: User): void {
-        this.data.push(user);
-    }
+  get allUser() {
+    return this._allUser;
+  }
 
-    removeUser(user: User): void {
-        const index = this.data.findIndex(u => u.id === user.id);
-        if (index !== -1) {
-            this.data.splice(index, 1);
-        }
-    }
+  get selectedUser(): User | null {
+    return this._selectedUser;
+  }
 
-    selectUser(userid: number) {
-        const user = this.data.find(u => u.id === userid);
-        if (user) {
-            this._selectedUser = user;
-        }
-    }
-
-
-
-    get selectedUser(): User | null {
-        return this._selectedUser;
-    }
-
-    set selectedUser(currentUser: User) {
-        this._selectedUser = currentUser;
-    }
-
-
+  set selectedUser(currentUser: User) {
+    this._selectedUser = currentUser;
+  }
 }

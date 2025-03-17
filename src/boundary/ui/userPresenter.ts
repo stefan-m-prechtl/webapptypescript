@@ -23,10 +23,11 @@ export default class Presenter {
     const service = new ServiceUser(this.baseURL);
     const result = await service.getAll();
 
-    this.view.show(result);
     result.forEach((user): void => {
       this.model.addUser(user);
     });
+
+    this.view.show(this.model.allUser);
   }
 
   handleTableRowSelected(userid: string) {
