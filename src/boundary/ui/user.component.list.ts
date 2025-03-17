@@ -19,23 +19,59 @@ export default class UserComponentList extends LitElement {
     return this;
   }
 
-  handleClickTable(event: Event) {
-    const target = event.target as HTMLElement;
-    let isChecked = false;
 
-    // Kein Klick auf Checkbox?
-    if (!(target instanceof HTMLInputElement && target.type === 'checkbox')) {
-      const row = target.closest('tr');
-      const checkbox = row?.querySelector('.row-checkbox') as HTMLInputElement;
-      checkbox.checked = !checkbox.checked;
-      isChecked = checkbox.checked;
-    } else {
-      const checkbox = target as HTMLInputElement;
-      isChecked = checkbox.checked;
+  handleClickTable(event: Event) {
+
+    //event.preventDefault();
+    const target = event.target as HTMLInputElement;
+
+    // Ensure it's a checkbox inside a table row
+    if (target && target.type === 'checkbox' && target.classList.contains('row-checkbox')) {
+        const row = target.closest('tr'); 
+
+        if (row) {
+            const rowId = row.getAttribute('data-id'); 
+            console.log(`Row ID: ${rowId}, Checked: ${target.checked}`);
+
+            const options = {
+              bubbles: true,
+              composed: true,
+              detail: rowId
+            }
+          
+            if (target.checked)
+            {
+              console.log("dispatchEvent 'selected'")
+              this.dispatchEvent(new CustomEvent('user.list.row.selected', options));
+            }
+            else
+            {
+              console.log("dispatchEvent 'unselected'")
+              this.dispatchEvent(new CustomEvent('user.list.row.unselected', options));
+            }
+
+        }
     }
 
-    console.log(`isChecked: ${isChecked}`);
-    this.updateActionMenu();
+    
+    
+
+    // const target = event.target as HTMLElement;
+    // let isChecked = false;
+
+    // Kein Klick auf Checkbox?
+    // if (!(target instanceof HTMLInputElement && target.type === 'checkbox')) {
+    //   const row = target.closest('tr');
+    //   const checkbox = row?.querySelector('.row-checkbox') as HTMLInputElement;
+    //   checkbox.checked = !checkbox.checked;
+    //   isChecked = checkbox.checked;
+    // } else {
+    //   const checkbox = target as HTMLInputElement;
+    //   isChecked = checkbox.checked;
+    // }
+
+    //console.log(`isChecked: ${isChecked}`);
+    //this.updateActionMenu();
   }
 
   handleSelectAllClick(event: Event) {

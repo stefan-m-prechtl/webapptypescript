@@ -24,9 +24,6 @@ export default class View {
   }
 
   initView() {
-    const edit = new UserComponentEdit();
-    edit.user = null;
-
     new UserComponentList([]);
   }
 
@@ -41,6 +38,16 @@ export default class View {
     btnClear.addEventListener('click', () => {
       this.presenter?.clear();
     });
+
+    document.addEventListener('user.list.row.selected', (event) => {
+      const customEvent = event as CustomEvent; // Cast to CustomEvent
+      console.log(`Row selected: ${customEvent.detail}`);
+  });
+
+  document.addEventListener('user.list.row.unselected', (event) => {
+    const customEvent = event as CustomEvent; // Cast to CustomEvent
+    console.log(`Row unselected: ${customEvent.detail}`);
+});
 
     // chkSelectAll.addEventListener("change", () => {
     //   const checkboxes =

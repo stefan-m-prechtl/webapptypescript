@@ -30,17 +30,17 @@ export default class Presenter {
     this.view.show(this.model.allUser);
   }
 
-  handleTableRowSelected(userid: string) {
-    console.log(`User with id ${userid} was selected`);
-    this.model.selectUser(Number(userid));
+  // handleTableRowSelected(userid: string) {
+  //   console.log(`User with id ${userid} was selected`);
+  //   this.model.selectUser(Number(userid));
 
-    if (this.model.selectedUser) {
-      this.view.showCurrentUser(this.model.selectedUser);
-    }
-  }
+  //   if (this.model.selectedUser) {
+  //     this.view.showCurrentUser(this.model.selectedUser);
+  //   }
+  // }
 
-  handleActionEdit() {
-    this.model.selectUser(1);
-    this.view.showEditUser(this.model.selectedUser!);
-  }
+  // handleActionEdit() {
+  //   this.model.selectUser(1);
+  //   this.view.showEditUser(this.model.selectedUser!);
+  // }
 }
