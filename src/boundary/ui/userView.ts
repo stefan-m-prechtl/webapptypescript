@@ -1,5 +1,6 @@
-import { User } from "../../domain/user";
+import { JsonDataUser, User } from "../../domain/user";
 import UserComponentEdit from "./user.component.edit";
+import UserComponentList from "./user.component.list";
 import Presenter from "./userPresenter";
 import { html, render } from "lit";
 
@@ -24,43 +25,33 @@ export default class View {
   }
 
   initView() {
-    const uce = new UserComponentEdit();
-    uce.version ="1.1.0";
+    new UserComponentEdit();
+    new UserComponentList();
   }
 
   initEventHandler() {
     const btnLoad = document.querySelector<HTMLButtonElement>("#btnLoad")!;
     const btnClear = document.querySelector<HTMLButtonElement>("#btnClear")!;
-    const chkSelectAll =
-      document.querySelector<HTMLInputElement>("#selectAll")!;
-
-    const actionEdit =
-      document.querySelector<HTMLButtonElement>("#actionEdit")!;
+    
 
     btnLoad.addEventListener("click", () => {
       this.presenter?.load();
-      const uce= document.querySelector("user-edit") as UserComponentEdit;
-      uce.version="2.0";
-    });
 
-    btnClear.addEventListener("click", () => {
-      this.presenter?.clear();
-    });
+      // const userdata: JsonDataUser = {
+      //   id: 4711,
+      //   name: "prs",
+      //   password: "geheim123",
+      //   firstname: "Stefan",
+      //   lastname: "Prechtl",
+      // };
 
-    chkSelectAll.addEventListener("change", () => {
-      const checkboxes =
-        document.querySelectorAll<HTMLInputElement>(".row-checkbox");
-      checkboxes.forEach((checkbox) => {
-        checkbox.checked = chkSelectAll.checked;
-        checkbox
-          .closest("tr")
-          ?.classList.toggle("selectedRow", chkSelectAll.checked);
-      });
-      this.updateActionMenu(checkboxes);
-    });
+      // const uce = document.querySelector("user-edit") as UserComponentEdit;
+      // uce.user = new User(userdata);
 
-    actionEdit.addEventListener("click", () => {
-      this.presenter?.handleActionEdit();
+      // const ucl = document.querySelector("user-list") as UserComponentList;
+      // const users = this.presenter?.model?.data!;
+      // ucl.users.push(users[0]);
+
     });
   }
 
@@ -140,6 +131,6 @@ export default class View {
   showEditUser(user: User) {
     console.log(`Current User: id=${user.id}, name=${user.name}`);
   }
-  
+
 
 }

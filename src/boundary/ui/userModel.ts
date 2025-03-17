@@ -2,8 +2,8 @@ import { User } from "../../domain/user";
 
 export default class Model {
 
-    private data: User[];
-    private _selectedUser: User | null;
+    data: User[];
+    _selectedUser: User | null;
 
     constructor() {
         this.data = [];

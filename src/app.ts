@@ -3,6 +3,7 @@
 // @ts-ignore
 import { initNavigation, initRouting, selectPage } from "./boundary/ui/navigation";
 import UserComponentEdit from "./boundary/ui/user.component.edit.ts";
+import UserComponentList from "./boundary/ui/user.component.list.ts";
 
 import Model from "./boundary/ui/userModel.ts";
 import Presenter from "./boundary/ui/userPresenter.ts";
@@ -11,7 +12,8 @@ import View from "./boundary/ui/userView.ts";
 
 declare global {
     interface HTMLElementTagNameMap {
-        "user-edit": UserComponentEdit;
+        "user-edit": UserComponentEdit,
+        "user-list": UserComponentList
     }
 }
 

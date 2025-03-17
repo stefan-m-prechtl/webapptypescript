@@ -5,8 +5,8 @@ import View from "./userView";
 export default class Presenter {
   private baseURL = "http://localhost:8080/workflow";
 
-  private view: View;
-  private model: Model;
+  view: View;
+  model: Model;
 
   constructor(view: View, model: Model) {
     this.view = view;
