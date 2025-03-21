@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { User } from '../../domain/user';
+import { EVENTS } from './user.constants';
 
 @customElement('user-list')
 export default class UserComponentList extends LitElement {
@@ -19,73 +20,68 @@ export default class UserComponentList extends LitElement {
     return this;
   }
 
-
   handleClickTable(event: Event) {
-
-    //event.preventDefault();
     const target = event.target as HTMLInputElement;
-
-    // Ensure it's a checkbox inside a table row
     if (target && target.type === 'checkbox' && target.classList.contains('row-checkbox')) {
-        const row = target.closest('tr'); 
-
-        if (row) {
-            const rowId = row.getAttribute('data-id'); 
-            console.log(`Row ID: ${rowId}, Checked: ${target.checked}`);
-
-            const options = {
-              bubbles: true,
-              composed: true,
-              detail: rowId
-            }
-          
-            if (target.checked)
-            {
-              console.log("dispatchEvent 'selected'")
-              this.dispatchEvent(new CustomEvent('user.list.row.selected', options));
-            }
-            else
-            {
-              console.log("dispatchEvent 'unselected'")
-              this.dispatchEvent(new CustomEvent('user.list.row.unselected', options));
-            }
-
+      const row = target.closest('tr');
+      if (row) {
+        // Checkbox "Alle" anpassen
+        const checkboxAll = document.querySelector<HTMLInputElement>('#selectAll')!;
+        const checkboxesRow = document.querySelectorAll<HTMLInputElement>('.row-checkbox');
+        const allChecked = Array.from(checkboxesRow).every((checkbox) => checkbox.checked);
+        if (allChecked) {
+          checkboxAll.checked = true;
+          checkboxAll.indeterminate = false;
+        } else {
+          const noneChecked = Array.from(checkboxesRow).every((checkbox) => !checkbox.checked);
+          if (noneChecked) {
+            checkboxAll.checked = false;
+            checkboxAll.indeterminate = false;
+          } else {
+            checkboxAll.checked = false;
+            checkboxAll.indeterminate = true;
+          }
         }
+
+        const rowId = row.getAttribute('data-id');
+        const options = {
+          bubbles: true,
+          composed: true,
+          detail: rowId,
+        };
+
+        if (target.checked) {
+          this.dispatchEvent(new CustomEvent(EVENTS.EVENT_ONE_SELECTED, options));
+        } else {
+          this.dispatchEvent(new CustomEvent(EVENTS.EVENT_ONE_UNSELECTED, options));
+        }
+        this.updateActionMenu();
+      }
     }
-
-    
-    
-
-    // const target = event.target as HTMLElement;
-    // let isChecked = false;
-
-    // Kein Klick auf Checkbox?
-    // if (!(target instanceof HTMLInputElement && target.type === 'checkbox')) {
-    //   const row = target.closest('tr');
-    //   const checkbox = row?.querySelector('.row-checkbox') as HTMLInputElement;
-    //   checkbox.checked = !checkbox.checked;
-    //   isChecked = checkbox.checked;
-    // } else {
-    //   const checkbox = target as HTMLInputElement;
-    //   isChecked = checkbox.checked;
-    // }
-
-    //console.log(`isChecked: ${isChecked}`);
-    //this.updateActionMenu();
   }
 
   handleSelectAllClick(event: Event) {
     const target = event.target as HTMLInputElement;
-    if (target.id !== 'selectAll') return;
+    if (target && target.id == 'selectAll') {
+      this.allSelected = target.checked;
 
-    const checkboxAll = event.target as HTMLInputElement;
-    this.allSelected = checkboxAll.checked;
-    const checkboxes = document.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
-    checkboxes?.forEach((checkbox) => {
-      checkbox.checked = this.allSelected;
-    });
+      const checkboxes = document.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
+      checkboxes?.forEach((checkbox) => {
+        checkbox.checked = this.allSelected;
+      });
+      this.updateActionMenu();
 
-    this.updateActionMenu();
+      const options = {
+        bubbles: true,
+        composed: true,
+      };
+
+      if (target.checked) {
+        this.dispatchEvent(new CustomEvent(EVENTS.EVENT_ALL_SELECTED, options));
+      } else {
+        this.dispatchEvent(new CustomEvent(EVENTS.EVENT_ALL_UNSELECTED, options));
+      }
+    }
   }
 
   updateActionMenu() {
@@ -107,8 +103,8 @@ export default class UserComponentList extends LitElement {
       </div>
       <div class="w3-panel">
         <table class="w3-table w3-bordered" id="tblUser">
-          <thead>
-            <tr class="w3-light-gray" @click=${this.handleSelectAllClick}>
+          <thead id="tblHead" @click=${this.handleSelectAllClick}>
+            <tr class="w3-light-gray">
               <th><input type="checkbox" id="selectAll" /></th>
               <th>Kennung</th>
               <th>Vorname</th>

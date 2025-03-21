@@ -2,6 +2,7 @@ import { User } from '../../domain/user';
 import UserComponentEdit from './user.component.edit';
 import UserComponentList from './user.component.list';
 import Presenter from './userPresenter';
+import { EVENTS } from './user.constants';
 
 type NullableHtmlElement = HTMLElement | null;
 
@@ -39,45 +40,26 @@ export default class View {
       this.presenter?.clear();
     });
 
-    document.addEventListener('user.list.row.selected', (event) => {
+    document.addEventListener(EVENTS.EVENT_ALL_SELECTED, (event) => {
       const customEvent = event as CustomEvent; // Cast to CustomEvent
-      console.log(`Row selected: ${customEvent.detail}`);
-  });
+      this.presenter?.handleEvent(EVENTS.EVENT_ALL_SELECTED, customEvent);
+    });
 
-  document.addEventListener('user.list.row.unselected', (event) => {
-    const customEvent = event as CustomEvent; // Cast to CustomEvent
-    console.log(`Row unselected: ${customEvent.detail}`);
-});
+    document.addEventListener(EVENTS.EVENT_ALL_UNSELECTED, (event) => {
+      const customEvent = event as CustomEvent; // Cast to CustomEvent
+      this.presenter?.handleEvent(EVENTS.EVENT_ALL_UNSELECTED, customEvent);
+    });
 
-    // chkSelectAll.addEventListener("change", () => {
-    //   const checkboxes =
-    //     document.querySelectorAll<HTMLInputElement>(".row-checkbox");
-    //   checkboxes.forEach((checkbox) => {
-    //     checkbox.checked = chkSelectAll.checked;
-    //     checkbox
-    //       .closest("tr")
-    //       ?.classList.toggle("selectedRow", chkSelectAll.checked);
-    //   });
-    //   this.updateActionMenu(checkboxes);
-    // });
+    document.addEventListener(EVENTS.EVENT_ONE_SELECTED, (event) => {
+      const customEvent = event as CustomEvent; // Cast to CustomEvent
+      this.presenter?.handleEvent(EVENTS.EVENT_ONE_SELECTED, customEvent);
+    });
 
-    // actionEdit.addEventListener("click", () => {
-    //   this.presenter?.handleActionEdit();
-    // });
+    document.addEventListener(EVENTS.EVENT_ONE_UNSELECTED, (event) => {
+      const customEvent = event as CustomEvent; // Cast to CustomEvent
+      this.presenter?.handleEvent(EVENTS.EVENT_ONE_UNSELECTED, customEvent);
+    });
   }
-
-  // updateActionMenu(checkboxes: NodeListOf<HTMLInputElement>) {
-  //   const actionsMenu = document.querySelector("#actions")!;
-
-  //   const anyChecked = Array.from(checkboxes).some(
-  //     (checkbox) => checkbox.checked
-  //   );
-  //   if (anyChecked) {
-  //     actionsMenu.removeAttribute("hidden");
-  //   } else {
-  //     actionsMenu.setAttribute("hidden", "true");
-  //   }
-  // }
 
   clear() {
     const listComponent: UserComponentList = document.querySelector<UserComponentList>('user-list')!;
@@ -89,44 +71,6 @@ export default class View {
     const listComponent: UserComponentList = document.querySelector<UserComponentList>('user-list')!;
     listComponent.users = users;
   }
-
-  // attachRowEventListeners() {
-  //   const checkboxes =
-  //     document.querySelectorAll<HTMLInputElement>(".row-checkbox");
-
-  //   checkboxes.forEach((checkbox) => {
-  //     checkbox.addEventListener("change", (e) => {
-  //       const target = e.target as HTMLInputElement;
-  //       const row = target.closest("tr");
-  //       if (row) {
-  //         row.classList.toggle("selectedRow", target.checked);
-  //       }
-
-  //       const chkSelectAll =
-  //         document.querySelector<HTMLInputElement>("#selectAll")!;
-  //       const allChecked = Array.from(checkboxes).every(
-  //         (checkbox) => checkbox.checked
-  //       );
-  //       if (allChecked) {
-  //         chkSelectAll.checked = true;
-  //         chkSelectAll.indeterminate = false;
-  //       } else {
-  //         const noneChecked = Array.from(checkboxes).every(
-  //           (checkbox) => !checkbox.checked
-  //         );
-  //         if (noneChecked) {
-  //           chkSelectAll.checked = false;
-  //           chkSelectAll.indeterminate = false;
-  //         } else {
-  //           chkSelectAll.checked = false;
-  //           chkSelectAll.indeterminate = true;
-  //         }
-  //       }
-
-  //       this.updateActionMenu(checkboxes);
-  //     });
-  //   });
-  // }
 
   showCurrentUser(user: User) {
     console.log(`Current User: id=${user.id}, name=${user.name}`);

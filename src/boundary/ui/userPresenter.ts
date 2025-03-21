@@ -1,9 +1,10 @@
-import ServiceUser from "../rest/serviceUser";
-import Model from "./userModel";
-import View from "./userView";
+import ServiceUser from '../rest/serviceUser';
+import Model from './userModel';
+import View from './userView';
+import { EVENTS } from './user.constants';
 
 export default class Presenter {
-  private baseURL = "http://localhost:8080/workflow";
+  private baseURL = 'http://localhost:8080/workflow';
 
   view: View;
   model: Model;
@@ -30,17 +31,38 @@ export default class Presenter {
     this.view.show(this.model.allUser);
   }
 
-  // handleTableRowSelected(userid: string) {
-  //   console.log(`User with id ${userid} was selected`);
-  //   this.model.selectUser(Number(userid));
+  handleEvent(eventname: EVENTS, event: CustomEvent): void {
+    switch (eventname) {
+      case EVENTS.EVENT_ALL_SELECTED:
+        this.selectAll();
+        break;
+      case EVENTS.EVENT_ALL_UNSELECTED:
+        this.unselectAll();
+        break;
+      case EVENTS.EVENT_ONE_SELECTED:
+        this.selectOne(event);
+        break;
+      case EVENTS.EVENT_ONE_UNSELECTED:
+        this.unselectOne(event);
+        break;
+      default:
+        console.log(`No case for ${eventname}`);
+    }
+  }
+  private selectAll() {
+    this.model.selectAll();
+  }
 
-  //   if (this.model.selectedUser) {
-  //     this.view.showCurrentUser(this.model.selectedUser);
-  //   }
-  // }
+  private unselectAll() {
+    this.model.unselectAll();
+  }
 
-  // handleActionEdit() {
-  //   this.model.selectUser(1);
-  //   this.view.showEditUser(this.model.selectedUser!);
-  // }
+  private selectOne(event: CustomEvent) {
+    const userid: number = event.detail;
+    this.model.selectOne(userid);
+  }
+  private unselectOne(event: CustomEvent) {
+    const userid: number = event.detail;
+    this.model.unselectOne(userid);
+  }
 }
