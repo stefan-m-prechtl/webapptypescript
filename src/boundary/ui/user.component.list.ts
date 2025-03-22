@@ -20,6 +20,37 @@ export default class UserComponentList extends LitElement {
     return this;
   }
 
+  render() {
+    return html`
+      <div class="w3-panel w3-bar" id="actions" style="visibility: hidden">
+        <a href="#" class="w3-bar-item w3-button w3-grey" id="actionEdit">Bearbeiten</a>
+        <a href="#" class="w3-bar-item w3-button w3-grey" id="actionDelete">Löschen</a>
+      </div>
+      <div class="w3-panel">
+        <table class="w3-table w3-bordered" id="tblUser">
+          <thead id="tblHead" @click=${this.handleSelectAllClick}>
+            <tr class="w3-light-gray">
+              <th><input type="checkbox" id="selectAll" /></th>
+              <th>Kennung</th>
+              <th>Vorname</th>
+              <th>Nachname</th>
+            </tr>
+          </thead>
+          <tbody id="tblBody" @click="${this.handleClickTable}">
+            ${this.users.map(
+              (user) => html` <tr data-id="${user.id}">
+                <td><input type="checkbox" class="row-checkbox" /></td>
+                <td>${user.name}</td>
+                <td>${user.firstname}</td>
+                <td>${user.lastname}</td>
+              </tr>`,
+            )}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+
   handleClickTable(event: Event) {
     const target = event.target as HTMLInputElement;
     if (target && target.type === 'checkbox' && target.classList.contains('row-checkbox')) {
@@ -43,7 +74,7 @@ export default class UserComponentList extends LitElement {
           }
         }
 
-        const rowId = row.getAttribute('data-id');
+        const rowId = Number(row.getAttribute('data-id')!);
         const options = {
           bubbles: true,
           composed: true,
@@ -51,9 +82,9 @@ export default class UserComponentList extends LitElement {
         };
 
         if (target.checked) {
-          this.dispatchEvent(new CustomEvent(EVENTS.EVENT_ONE_SELECTED, options));
+          this.dispatchEvent(new CustomEvent(EVENTS.EVENT_ONE_SELECTED, options) as CustomEvent<number>);
         } else {
-          this.dispatchEvent(new CustomEvent(EVENTS.EVENT_ONE_UNSELECTED, options));
+          this.dispatchEvent(new CustomEvent(EVENTS.EVENT_ONE_UNSELECTED, options)as CustomEvent<number>);
         }
         this.updateActionMenu();
       }
@@ -95,34 +126,5 @@ export default class UserComponentList extends LitElement {
     }
   }
 
-  render() {
-    return html`
-      <div class="w3-panel w3-bar" id="actions" style="visibility: hidden">
-        <a href="#" class="w3-bar-item w3-button w3-grey" id="actionEdit">Bearbeiten</a>
-        <a href="#" class="w3-bar-item w3-button w3-grey" id="actionDelete">Löschen</a>
-      </div>
-      <div class="w3-panel">
-        <table class="w3-table w3-bordered" id="tblUser">
-          <thead id="tblHead" @click=${this.handleSelectAllClick}>
-            <tr class="w3-light-gray">
-              <th><input type="checkbox" id="selectAll" /></th>
-              <th>Kennung</th>
-              <th>Vorname</th>
-              <th>Nachname</th>
-            </tr>
-          </thead>
-          <tbody id="tblBody" @click="${this.handleClickTable}">
-            ${this.users.map(
-              (user) => html` <tr data-id="${user.id}">
-                <td><input type="checkbox" class="row-checkbox" /></td>
-                <td>${user.name}</td>
-                <td>${user.firstname}</td>
-                <td>${user.lastname}</td>
-              </tr>`,
-            )}
-          </tbody>
-        </table>
-      </div>
-    `;
-  }
+  
 }

@@ -2,11 +2,11 @@ import { User } from '../../domain/user';
 
 export default class Model {
   private _allUser: User[];
-  private _selectedUser: Map<number, User>;
+  private _selectedUsers: Map<number, User>;
 
   constructor() {
     this._allUser = [];
-    this._selectedUser = new Map<number, User>();
+    this._selectedUsers = new Map<number, User>();
   }
 
   reset() {
@@ -27,31 +27,38 @@ export default class Model {
   selectUser(userid: number) {
     const user = this._allUser.find((u) => u.id === userid);
     if (user) {
-      this._selectedUser.set(userid, user);
+      this._selectedUsers.set(userid, user);
     }
   }
 
   selectAll() {
-    this._allUser.forEach((user) => this._selectedUser.set(user.id, user));
+    this._allUser.forEach((user) => this._selectedUsers.set(user.id, user));
   }
   unselectAll() {
-    this._selectedUser.clear();
+    this._selectedUsers.clear();
   }
 
   selectOne(userid: number) {
     const user = this._allUser.find((u) => u.id === userid)!;
-    this._selectedUser.set(userid, user);
+    this._selectedUsers.set(userid, user);
   }
 
   unselectOne(userid: number) {
-    this._selectedUser.delete(userid);
+    this._selectedUsers.delete(userid);
+  }
+
+  selectedUser(userid: number): User | undefined {
+    const result = this._selectedUsers.get(userid);
+    return result;
   }
 
   get allUser() {
     return this._allUser;
   }
 
-  get selectedUser(): Map<number, User> {
-    return this._selectedUser;
+  get selectedUsers(): Map<number, User> {
+    return this._selectedUsers;
   }
+
+  
 }

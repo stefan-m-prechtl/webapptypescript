@@ -26,6 +26,7 @@ export default class View {
 
   initView() {
     new UserComponentList([]);
+    new UserComponentEdit();
   }
 
   initEventHandler() {
@@ -67,7 +68,7 @@ export default class View {
   }
 
   show(users: User[]) {
-    // this.attachRowEventListeners();
+
     const listComponent: UserComponentList = document.querySelector<UserComponentList>('user-list')!;
     listComponent.users = users;
   }
@@ -76,7 +77,8 @@ export default class View {
     console.log(`Current User: id=${user.id}, name=${user.name}`);
   }
 
-  showEditUser(user: User) {
-    console.log(`Current User: id=${user.id}, name=${user.name}`);
+  showEditUser(user: User | undefined) {
+    const editComponent: UserComponentEdit = document.querySelector('user-edit')as UserComponentEdit;
+    editComponent.user = user;
   }
 }

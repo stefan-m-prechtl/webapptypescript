@@ -60,9 +60,14 @@ export default class Presenter {
   private selectOne(event: CustomEvent) {
     const userid: number = event.detail;
     this.model.selectOne(userid);
+
+    const selectedUser = this.model.selectedUser(userid);
+    this.view.showEditUser(selectedUser);
+
   }
   private unselectOne(event: CustomEvent) {
     const userid: number = event.detail;
     this.model.unselectOne(userid);
+    this.view.showEditUser(undefined);
   }
 }
