@@ -85,19 +85,19 @@ export default class UserComponentList extends LitElement {
   }
 
   updateActionMenu() {
-    const actionsMenu = document.querySelector('#actions')!;
+    const actionsMenu = document.querySelector('#actions') as HTMLElement;
     const checkboxes = document.querySelectorAll('.row-checkbox');
     const anyChecked = Array.from(checkboxes).some((checkbox) => (checkbox as HTMLInputElement).checked);
     if (anyChecked) {
-      actionsMenu.removeAttribute('hidden');
+      actionsMenu.style.visibility = "visible";
     } else {
-      actionsMenu.setAttribute('hidden', 'true');
+      actionsMenu.style.visibility = "hidden";
     }
   }
 
   render() {
     return html`
-      <div class="w3-panel w3-bar" id="actions" hidden>
+      <div class="w3-panel w3-bar" id="actions" style="visibility: hidden">
         <a href="#" class="w3-bar-item w3-button w3-grey" id="actionEdit">Bearbeiten</a>
         <a href="#" class="w3-bar-item w3-button w3-grey" id="actionDelete">Löschen</a>
       </div>
