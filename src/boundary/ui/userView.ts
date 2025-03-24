@@ -41,6 +41,11 @@ export default class View {
       this.presenter?.clear();
     });
 
+    document.addEventListener(EVENTS.EVENT_EDIT_CLICKED, (event) => {
+      const customEvent = event as CustomEvent; // Cast to CustomEvent
+      this.presenter?.handleEvent(EVENTS.EVENT_EDIT_CLICKED, customEvent);
+    });
+
     document.addEventListener(EVENTS.EVENT_ALL_SELECTED, (event) => {
       const customEvent = event as CustomEvent; // Cast to CustomEvent
       this.presenter?.handleEvent(EVENTS.EVENT_ALL_SELECTED, customEvent);
@@ -68,7 +73,6 @@ export default class View {
   }
 
   show(users: User[]) {
-
     const listComponent: UserComponentList = document.querySelector<UserComponentList>('user-list')!;
     listComponent.users = users;
   }
@@ -78,7 +82,11 @@ export default class View {
   }
 
   showEditUser(user: User | undefined) {
-    const editComponent: UserComponentEdit = document.querySelector('user-edit')as UserComponentEdit;
+    const editComponent: UserComponentEdit = document.querySelector('user-edit') as UserComponentEdit;
     editComponent.user = user;
+  }
+
+  showInfo(msg: string) {
+    alert(msg);
   }
 }

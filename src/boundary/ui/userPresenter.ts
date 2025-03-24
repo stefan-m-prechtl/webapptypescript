@@ -33,6 +33,9 @@ export default class Presenter {
 
   handleEvent(eventname: EVENTS, event: CustomEvent): void {
     switch (eventname) {
+      case EVENTS.EVENT_EDIT_CLICKED:
+        this.editSelected();
+        break;
       case EVENTS.EVENT_ALL_SELECTED:
         this.selectAll();
         break;
@@ -49,6 +52,20 @@ export default class Presenter {
         console.log(`No case for ${eventname}`);
     }
   }
+
+  private editSelected() {
+    const selectedUsers = this.model.selectedUsers;
+
+    if (selectedUsers.size === 1) {
+      const selectedUser = selectedUsers.values().next().value;
+      this.view.showEditUser(selectedUser);
+      return;
+    }
+    if (selectedUsers.size > 1) {
+      this.view.showInfo('Es kann nur ein selektierter Benutzer bearbeitet werden');
+    }
+  }
+
   private selectAll() {
     this.model.selectAll();
   }
@@ -60,10 +77,6 @@ export default class Presenter {
   private selectOne(event: CustomEvent) {
     const userid: number = event.detail;
     this.model.selectOne(userid);
-
-    const selectedUser = this.model.selectedUser(userid);
-    this.view.showEditUser(selectedUser);
-
   }
   private unselectOne(event: CustomEvent) {
     const userid: number = event.detail;

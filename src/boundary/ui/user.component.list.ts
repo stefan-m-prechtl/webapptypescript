@@ -23,7 +23,7 @@ export default class UserComponentList extends LitElement {
   render() {
     return html`
       <div class="w3-panel w3-bar" id="actions" style="visibility: hidden">
-        <a href="#" class="w3-bar-item w3-button w3-grey" id="actionEdit">Bearbeiten</a>
+        <a href="#" class="w3-bar-item w3-button w3-grey" @click=${this.handleClickEdit}>Bearbeiten</a>
         <a href="#" class="w3-bar-item w3-button w3-grey" id="actionDelete">Löschen</a>
       </div>
       <div class="w3-panel">
@@ -49,6 +49,14 @@ export default class UserComponentList extends LitElement {
         </table>
       </div>
     `;
+  }
+
+  handleClickEdit() {
+    const options = {
+      bubbles: true,
+      composed: true,
+    };
+    this.dispatchEvent(new CustomEvent(EVENTS.EVENT_EDIT_CLICKED, options));
   }
 
   handleClickTable(event: Event) {
@@ -84,7 +92,7 @@ export default class UserComponentList extends LitElement {
         if (target.checked) {
           this.dispatchEvent(new CustomEvent(EVENTS.EVENT_ONE_SELECTED, options) as CustomEvent<number>);
         } else {
-          this.dispatchEvent(new CustomEvent(EVENTS.EVENT_ONE_UNSELECTED, options)as CustomEvent<number>);
+          this.dispatchEvent(new CustomEvent(EVENTS.EVENT_ONE_UNSELECTED, options) as CustomEvent<number>);
         }
         this.updateActionMenu();
       }
@@ -120,11 +128,9 @@ export default class UserComponentList extends LitElement {
     const checkboxes = document.querySelectorAll('.row-checkbox');
     const anyChecked = Array.from(checkboxes).some((checkbox) => (checkbox as HTMLInputElement).checked);
     if (anyChecked) {
-      actionsMenu.style.visibility = "visible";
+      actionsMenu.style.visibility = 'visible';
     } else {
-      actionsMenu.style.visibility = "hidden";
+      actionsMenu.style.visibility = 'hidden';
     }
   }
-
-  
 }
