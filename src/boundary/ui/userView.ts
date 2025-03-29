@@ -65,6 +65,11 @@ export default class View {
       const customEvent = event as CustomEvent; // Cast to CustomEvent
       this.presenter?.handleEvent(EVENTS.EVENT_ONE_UNSELECTED, customEvent);
     });
+
+    document.addEventListener(EVENTS.EVENT_DIALOG_OK_CLICKED, (event) => {
+      const customEvent = event as CustomEvent; // Cast to CustomEvent
+      this.presenter?.handleEvent(EVENTS.EVENT_DIALOG_OK_CLICKED, customEvent);
+    });
   }
 
   clear() {
@@ -74,7 +79,7 @@ export default class View {
 
   show(users: User[]) {
     const listComponent: UserComponentList = document.querySelector<UserComponentList>('user-list')!;
-    listComponent.users = users;
+    listComponent.users = [...users];
   }
 
   showCurrentUser(user: User) {

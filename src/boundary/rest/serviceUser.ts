@@ -16,4 +16,15 @@ export default class ServiceUser {
         const result = jsonData.map(json => new User(json));
         return result;
     }
+
+    async save(user :User): Promise<User> {
+        const endpoint = `/user/${user.id}`;
+        const jsonData = user.toJson();
+        const jsonResult = await this.baseservice.put<JsonDataUser>(endpoint,jsonData);
+
+        const result = new User(jsonResult);
+        return result;
+        
+    }
+
 }

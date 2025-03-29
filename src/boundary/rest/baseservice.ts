@@ -23,8 +23,8 @@ export default class BaseService {
         }
 
         // Ensure proper type safety when parsing JSON
-        const data: T = await response.json();
-        return data;
+        const result: T = await response.json();
+        return result;
     }
 
     async post<T>(endpoint: string, jsonData: string): Promise<T> {
@@ -43,7 +43,8 @@ export default class BaseService {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        return response.json();
+        const result: T = await response.json();
+        return result;
     }
 
     async put<T>(endpoint: string, jsonData: string): Promise<T> {
@@ -61,7 +62,8 @@ export default class BaseService {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        return response.json();
+        const result: T = await response.json();
+        return result;
     }
 
     async delete(endpoint: string): Promise<void> {

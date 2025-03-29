@@ -1,6 +1,7 @@
 import ServiceUser from '../rest/serviceUser';
 import Model from './userModel';
 import View from './userView';
+import {User } from '../../domain/user'
 import { EVENTS } from './user.constants';
 
 export default class Presenter {
@@ -24,6 +25,7 @@ export default class Presenter {
     const service = new ServiceUser(this.baseURL);
     const result = await service.getAll();
 
+    this.model.reset();
     result.forEach((user): void => {
       this.model.addUser(user);
     });
@@ -47,6 +49,9 @@ export default class Presenter {
         break;
       case EVENTS.EVENT_ONE_UNSELECTED:
         this.unselectOne(event);
+        break;
+      case EVENTS.EVENT_DIALOG_OK_CLICKED:
+        this.save(event);
         break;
       default:
         console.log(`No case for ${eventname}`);
@@ -78,9 +83,32 @@ export default class Presenter {
     const userid: number = event.detail;
     this.model.selectOne(userid);
   }
+
   private unselectOne(event: CustomEvent) {
     const userid: number = event.detail;
     this.model.unselectOne(userid);
     this.view.showEditUser(undefined);
+  }
+
+  private save(event: CustomEvent<User>) {
+
+    const selectedUsers = this.model.selectedUsers;
+
+    if (selectedUsers.size === 1) {
+      const selectedUser = selectedUsers.values().next().value;
+
+      if (selectedUser) {
+        const userData = event.detail;
+
+
+        selectedUser.firstname = userData.firstname;
+        selectedUser.lastname = userData.lastname;
+
+        const service = new ServiceUser(this.baseURL);
+        service.save(selectedUser);
+
+        this.view.show(this.model.allUser);
+      }
+    }
   }
 }

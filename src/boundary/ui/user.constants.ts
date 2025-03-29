@@ -4,4 +4,5 @@ export enum EVENTS {
   EVENT_ALL_UNSELECTED = 'user.list.row.allunselected',
   EVENT_ONE_SELECTED = 'user.list.row.selected',
   EVENT_ONE_UNSELECTED = 'user.list.row.unselected',
+  EVENT_DIALOG_OK_CLICKED ='user.edit.ok.clicked'
 }
