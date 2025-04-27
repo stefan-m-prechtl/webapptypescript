@@ -5,6 +5,7 @@ export default class IncludeHTML extends HTMLElement {
 
   async connectedCallback() {
     const file = this.getAttribute('src');
+    console.log(file)
     if (file) {
       try {
         const response = await fetch(file);

@@ -1,6 +1,6 @@
 import { User } from '../../domain/user';
 
-export default class Model {
+export default class UserListModel {
   private _allUser: User[];
   private _selectedUsers: Map<number, User>;
 

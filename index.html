@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="src/boundary/ui/css/style.css" />
     <meta name="description" content="Typescript RextNG">
     <link rel="shortcut icon" href="#">
-    <script type="module" scr="./src/boundary/ui/navigation.js"></script>
+    <script type="module" scr="./src/boundary/ui/navigation.ts"></script>
     <script type="module" src="./src/app.ts"></script>
     <script type="module" src="./src/boundary/ui/includeHTML.ts"></script>
     <script type="module" scr="./src/boundary/ui/user.component.edit.ts"></script>
@@ -23,7 +23,7 @@
         <button id="nav_button">&#9776; Menü</button>
         <ul>
             <li><a class="nav_link nav_current_link" href="start">Start</a></li>
-            <li><a class="nav_link" href="user">Benutzer</a></li>
+            <li><a class="nav_link" href="user-list">Benutzer</a></li>
             <li><a class="nav_link" href="project">Projekte</a></li>
             <li><a class="nav_link" href="item">Items</a></li>
             <li><a class="nav_link" href="admin">Administration</a></li>
@@ -35,8 +35,12 @@
             <include-html src="start.html"></include-html>
         </div>
 
-        <div class="virtualpage hideDiv" id="user">
-            <include-html src="user.html"></include-html>
+        <div class="virtualpage hideDiv" id="user-list">
+            <include-html src="user-list.html"></include-html>
+        </div>
+
+        <div class="virtualpage hideDiv" id="user-edit">
+            <include-html src="user-edit.html"></include-html>
         </div>
 
         <div class="virtualpage hideDiv" id="project">
@@ -59,8 +63,12 @@
             <include-html src="start-aside.html"></include-html>
         </div>
 
-        <div id="user-aside" class="virtualpage hideDiv">
-            <include-html src="user-aside.html"></include-html>
+        <div id="user-list-aside" class="virtualpage hideDiv">
+            <include-html src="user-list-aside.html"></include-html>
+        </div>
+
+        <div id="user-edit-aside" class="virtualpage hideDiv">
+            <include-html src="user-edit-aside.html"></include-html>
         </div>
 
         <div id="project-aside" class="virtualpage hideDiv">

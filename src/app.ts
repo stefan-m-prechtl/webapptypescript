@@ -3,9 +3,9 @@ import { initNavigation, initRouting, selectPage } from './boundary/ui/navigatio
 import UserComponentEdit from './boundary/ui/user.component.edit.ts';
 import UserComponentList from './boundary/ui/user.component.list.ts';
 
-import Model from './boundary/ui/userModel.ts';
-import Presenter from './boundary/ui/userPresenter.ts';
-import View from './boundary/ui/userView.ts';
+import UserListModel from './boundary/ui/UserListModel.ts';
+import UserListPresenter from './boundary/ui/UserListPresenter.ts';
+import UserListView from './boundary/ui/UserListView.ts';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -18,10 +18,10 @@ declare global {
 document.addEventListener('DOMContentLoaded', init);
 
 // View "User" wurde includiert => Initialisierung
-document.addEventListener('user.html', () => {
-  const model = new Model();
-  const view = new View('#user');
-  new Presenter(view, model);
+document.addEventListener('user-list.html', () => {
+  const model = new UserListModel();
+  const view = new UserListView('#user-list');
+  new UserListPresenter(view, model);
 });
 
 function init() {

@@ -1,12 +1,12 @@
 import { User } from '../../domain/user';
 import UserComponentEdit from './user.component.edit';
 import UserComponentList from './user.component.list';
-import Presenter from './userPresenter';
+import Presenter from './UserListPresenter';
 import { EVENTS } from './user.constants';
 
 type NullableHtmlElement = HTMLElement | null;
 
-export default class View {
+export default class UserListView {
   presenter: Presenter | null;
   rootElement: NullableHtmlElement;
   tblBody: HTMLTableElement;
@@ -87,8 +87,11 @@ export default class View {
   }
 
   showEditUser(user: User | undefined) {
-    const editComponent: UserComponentEdit = document.querySelector('user-edit') as UserComponentEdit;
-    editComponent.user = user;
+    //const editComponent: UserComponentEdit = document.querySelector('user-edit') as UserComponentEdit;
+    //editComponent.user = user;
+    alert('Under construction!');
+    console.log(user?.name);
+
   }
 
   showInfo(msg: string) {

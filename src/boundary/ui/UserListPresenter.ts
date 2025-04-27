@@ -1,10 +1,10 @@
 import ServiceUser from '../rest/serviceUser';
-import Model from './userModel';
-import View from './userView';
+import Model from './UserListModel';
+import View from './UserListView';
 import {User } from '../../domain/user'
 import { EVENTS } from './user.constants';
 
-export default class Presenter {
+export default class UserListPresenter {
   private baseURL = 'http://localhost:8080/workflow';
 
   view: View;
