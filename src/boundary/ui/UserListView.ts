@@ -1,13 +1,12 @@
-import { User } from '../../domain/user';
-import UserComponentEdit from './user.component.edit';
+import { User } from '../../domain/User';
 import UserComponentList from './user.component.list';
-import Presenter from './UserListPresenter';
+import UserListPresenter from './UserListPresenter';
 import { EVENTS } from './user.constants';
 
 type NullableHtmlElement = HTMLElement | null;
 
 export default class UserListView {
-  presenter: Presenter | null;
+  presenter: UserListPresenter | null;
   rootElement: NullableHtmlElement;
   tblBody: HTMLTableElement;
 
@@ -18,7 +17,7 @@ export default class UserListView {
     this.tblBody = document.querySelector<HTMLTableElement>('#tblBody')!;
   }
 
-  setPresenter(presenter: Presenter) {
+  setPresenter(presenter: UserListPresenter) {
     this.presenter = presenter;
     this.initView();
     this.initEventHandler();
@@ -26,7 +25,6 @@ export default class UserListView {
 
   initView() {
     new UserComponentList([]);
-    new UserComponentEdit();
   }
 
   initEventHandler() {

@@ -73,7 +73,9 @@ function showPage(pageName: string): void {
 
   const selector = `[href='${pageName}']`;
   const navLink = document.querySelector(selector) as HTMLElement;
-  selectNavLink(navLink);
+  if (null != navLink) {
+    selectNavLink(navLink);
+  }
 
   const currentPage = document.querySelector('#' + pageName) as HTMLElement;
   currentPage.classList.remove('hideDiv');
@@ -113,3 +115,16 @@ function handleNavClick(e: Event): void {
   }
   e.preventDefault();
 }
+
+export function selectPageDirect(pageName: string): void {
+  if (pageName) {
+    history.pushState(
+      {},
+      pageName,
+      originHref + '?page=' + pageName
+    );
+    showPage(pageName);
+  }
+}
+
+

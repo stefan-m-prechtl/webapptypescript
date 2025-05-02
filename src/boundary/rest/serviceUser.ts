@@ -1,5 +1,5 @@
 import BaseService from "./baseservice";
-import { JsonDataUser, User } from "../../domain/user";
+import { JsonDataUser, User } from "../../domain/User";
 
 export default class ServiceUser {
     private baseservice: BaseService;

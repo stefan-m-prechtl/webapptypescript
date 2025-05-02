@@ -1,4 +1,4 @@
-import { User } from '../../domain/user';
+import { User } from '../../domain/User';
 
 export default class UserEditModel {
     private _currentUser: User;

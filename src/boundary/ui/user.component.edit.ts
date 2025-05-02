@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { User } from '../../domain/user';
+import { User } from '../../domain/User';
 import { EVENTS } from './user.constants';
 
 @customElement('user-edit')

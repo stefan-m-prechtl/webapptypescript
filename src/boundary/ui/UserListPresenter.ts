@@ -1,16 +1,19 @@
 import ServiceUser from '../rest/serviceUser';
-import Model from './UserListModel';
-import View from './UserListView';
-import {User } from '../../domain/user'
+import { EventHandler } from './EventHandler';
+import UserListModel from './UserListModel';
+import UserListView from './UserListView';
 import { EVENTS } from './user.constants';
 
 export default class UserListPresenter {
+
+  private eventHandler;
   private baseURL = 'http://localhost:8080/workflow';
 
-  view: View;
-  model: Model;
+  view: UserListView;
+  model: UserListModel;
 
-  constructor(view: View, model: Model) {
+  constructor(view: UserListView, model: UserListModel, eventHandler: EventHandler) {
+    this.eventHandler = eventHandler;
     this.view = view;
     this.model = model;
     this.view.setPresenter(this);
@@ -50,9 +53,6 @@ export default class UserListPresenter {
       case EVENTS.EVENT_ONE_UNSELECTED:
         this.unselectOne(event);
         break;
-      case EVENTS.EVENT_DIALOG_OK_CLICKED:
-        this.save(event);
-        break;
       default:
         console.log(`No case for ${eventname}`);
     }
@@ -63,10 +63,9 @@ export default class UserListPresenter {
 
     if (selectedUsers.size === 1) {
       const selectedUser = selectedUsers.values().next().value;
-      this.view.showEditUser(selectedUser);
-      return;
+      this.eventHandler.emitEventEditUser(selectedUser!);
     }
-    if (selectedUsers.size > 1) {
+    else if (selectedUsers.size > 1) {
       this.view.showInfo('Es kann nur ein selektierter Benutzer bearbeitet werden');
     }
   }
@@ -87,28 +86,27 @@ export default class UserListPresenter {
   private unselectOne(event: CustomEvent) {
     const userid: number = event.detail;
     this.model.unselectOne(userid);
-    this.view.showEditUser(undefined);
   }
 
-  private save(event: CustomEvent<User>) {
+  // private save(event: CustomEvent<User>) {
 
-    const selectedUsers = this.model.selectedUsers;
+  //   const selectedUsers = this.model.selectedUsers;
 
-    if (selectedUsers.size === 1) {
-      const selectedUser = selectedUsers.values().next().value;
+  //   if (selectedUsers.size === 1) {
+  //     const selectedUser = selectedUsers.values().next().value;
 
-      if (selectedUser) {
-        const userData = event.detail;
+  //     if (selectedUser) {
+  //       const userData = event.detail;
 
 
-        selectedUser.firstname = userData.firstname;
-        selectedUser.lastname = userData.lastname;
+  //       selectedUser.firstname = userData.firstname;
+  //       selectedUser.lastname = userData.lastname;
 
-        const service = new ServiceUser(this.baseURL);
-        service.save(selectedUser);
+  //       const service = new ServiceUser(this.baseURL);
+  //       service.save(selectedUser);
 
-        this.view.show(this.model.allUser);
-      }
-    }
-  }
+  //       this.view.show(this.model.allUser);
+  //     }
+  //   }
+  // }
 }
