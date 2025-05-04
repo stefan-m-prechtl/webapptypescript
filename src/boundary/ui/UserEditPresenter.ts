@@ -4,16 +4,14 @@ import UserEditView from './UserEditView';
 import { User } from '../../domain/User';
 import { selectPageDirect } from './navigation';
 
-
 export default class UserEditPresenter {
-
   private eventHandler;
   //private baseURL = 'http://localhost:8080/workflow';
 
   view: UserEditView;
   model: UserEditModel;
 
-  constructor(view: UserEditView, model: UserEditModel, eventHandler: EventHandler) {    
+  constructor(view: UserEditView, model: UserEditModel, eventHandler: EventHandler) {
     this.view = view;
     this.model = model;
     this.view.setPresenter(this);
@@ -29,11 +27,10 @@ export default class UserEditPresenter {
 
   private onEditUser(event: Event) {
     const customEvent = event as CustomEvent;
-    const user = customEvent.detail as User
-    //this.view.showUser(user);
-    console.log("UserEditPresenter::onEditUser: " + user.name);
+    const user = customEvent.detail as User;
+    this.view.show(user);
+    console.log('UserEditPresenter::onEditUser: ' + user.name);
 
-    selectPageDirect("user-edit")
-}
-
+    selectPageDirect('user-edit');
+  }
 }
