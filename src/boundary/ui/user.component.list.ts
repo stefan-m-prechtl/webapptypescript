@@ -22,9 +22,11 @@ export default class UserComponentList extends LitElement {
 
   render() {
     return html`
-      <div class="w3-panel w3-bar" id="actions" style="visibility: hidden">
-        <a href="#" class="w3-bar-item w3-button w3-grey" @click=${this.handleClickEdit}>Bearbeiten</a>
-        <a href="#" class="w3-bar-item w3-button w3-grey" id="actionDelete">Löschen</a>
+      <div class="w3-panel" >
+        <button id="btnRefresh" class="w3-button w3-light-gray" @click=${this.handleClickRefresh} >Aktualisieren</button>
+        <button id="btnClear"   class="w3-button w3-light-gray" @click=${this.handleClickClear} >Leeren</button>
+        <button id="btnEdit"    class="w3-button w3-light-gray" @click=${this.handleClickEdit} >Bearbeiten</button>
+        <button id="btnDelete"  class="w3-button w3-light-gray" @click=${this.handleClickDelete} >Löschen</button>
       </div>
       <div class="w3-panel">
         <table class="w3-table w3-bordered" id="tblUser">
@@ -38,25 +40,42 @@ export default class UserComponentList extends LitElement {
           </thead>
           <tbody id="tblBody" @click="${this.handleClickTable}">
             ${this.users.map(
-              (user) => html` <tr data-id="${user.id}">
+      (user) => html` <tr data-id="${user.id}">
                 <td><input type="checkbox" class="row-checkbox" /></td>
                 <td>${user.name}</td>
                 <td>${user.firstname}</td>
                 <td>${user.lastname}</td>
               </tr>`,
-            )}
+    )}
           </tbody>
         </table>
       </div>
     `;
   }
 
+  handleClickRefresh() {
+    this.handleClickMenu(EVENTS.EVENT_REFRESH_CLICKED);
+  }
+
+  handleClickClear() {
+    this.handleClickMenu(EVENTS.EVENT_CLEAR_CLICKED);
+  }
+
   handleClickEdit() {
+    this.handleClickMenu(EVENTS.EVENT_EDIT_CLICKED);
+  }
+
+  handleClickDelete() {
+    this.handleClickMenu(EVENTS.EVENT_DELETE_CLICKED);
+  }
+
+  private handleClickMenu(event: EVENTS) {
     const options = {
       bubbles: true,
-      composed: true,
+      composed: false,
     };
-    this.dispatchEvent(new CustomEvent(EVENTS.EVENT_EDIT_CLICKED, options));
+    console.log(`dispatch event ${event}`)
+    this.dispatchEvent(new CustomEvent(event, options));
   }
 
   handleClickTable(event: Event) {
@@ -124,13 +143,13 @@ export default class UserComponentList extends LitElement {
   }
 
   updateActionMenu() {
-    const actionsMenu = document.querySelector('#actions') as HTMLElement;
     const checkboxes = document.querySelectorAll('.row-checkbox');
     const anyChecked = Array.from(checkboxes).some((checkbox) => (checkbox as HTMLInputElement).checked);
-    if (anyChecked) {
-      actionsMenu.style.visibility = 'visible';
-    } else {
-      actionsMenu.style.visibility = 'hidden';
-    }
+
+    const editButton = document.querySelector('#btnEdit') as HTMLButtonElement;
+    const deleteButton = document.querySelector('#btnDelete') as HTMLButtonElement;
+
+    editButton.disabled = !anyChecked;
+    deleteButton.disabled = !anyChecked;
   }
 }

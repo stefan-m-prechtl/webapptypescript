@@ -19,25 +19,14 @@ export default class UserListPresenter {
     this.view.setPresenter(this);
   }
 
-  clear() {
-    this.model.reset();
-    this.view.clear();
-  }
-
-  async load() {
-    const service = new ServiceUser(this.baseURL);
-    const result = await service.getAll();
-
-    this.model.reset();
-    result.forEach((user): void => {
-      this.model.addUser(user);
-    });
-
-    this.view.show(this.model.allUser);
-  }
-
-  handleEvent(eventname: EVENTS, event: CustomEvent): void {
-    switch (eventname) {
+  handleEvent(event: CustomEvent): void {
+    switch (event.type) {
+      case EVENTS.EVENT_REFRESH_CLICKED:
+        this.load();
+        break;
+      case EVENTS.EVENT_CLEAR_CLICKED:
+        this.clear();
+        break;
       case EVENTS.EVENT_EDIT_CLICKED:
         this.editSelected();
         break;
@@ -54,9 +43,27 @@ export default class UserListPresenter {
         this.unselectOne(event);
         break;
       default:
-        console.log(`No case for ${eventname}`);
+        console.log(`No case for ${event.type}`);
     }
   }
+
+  private clear() {
+    this.model.reset();
+    this.view.clear();
+  }
+
+  private async load() {
+    const service = new ServiceUser(this.baseURL);
+    const result = await service.getAll();
+
+    this.model.reset();
+    result.forEach((user): void => {
+      this.model.addUser(user);
+    });
+
+    this.view.show(this.model.allUser);
+  }
+
 
   private editSelected() {
     const selectedUsers = this.model.selectedUsers;

@@ -28,45 +28,51 @@ export default class UserListView {
   }
 
   initEventHandler() {
-    const btnLoad = document.querySelector<HTMLButtonElement>('#btnLoad')!;
-    const btnClear = document.querySelector<HTMLButtonElement>('#btnClear')!;
 
-    btnLoad.addEventListener('click', () => {
-      this.presenter?.load();
+    document.addEventListener(EVENTS.EVENT_REFRESH_CLICKED, (event) => {
+      const customEvent = event as CustomEvent; // Cast to CustomEvent
+      this.presenter?.handleEvent(customEvent);
     });
 
-    btnClear.addEventListener('click', () => {
-      this.presenter?.clear();
+    document.addEventListener(EVENTS.EVENT_CLEAR_CLICKED, (event) => {
+      const customEvent = event as CustomEvent; // Cast to CustomEvent
+      this.presenter?.handleEvent(customEvent);
     });
+
 
     document.addEventListener(EVENTS.EVENT_EDIT_CLICKED, (event) => {
       const customEvent = event as CustomEvent; // Cast to CustomEvent
-      this.presenter?.handleEvent(EVENTS.EVENT_EDIT_CLICKED, customEvent);
+      this.presenter?.handleEvent(customEvent);
+    });
+
+    document.addEventListener(EVENTS.EVENT_DELETE_CLICKED, (event) => {
+      const customEvent = event as CustomEvent; // Cast to CustomEvent
+      this.presenter?.handleEvent(customEvent);
     });
 
     document.addEventListener(EVENTS.EVENT_ALL_SELECTED, (event) => {
       const customEvent = event as CustomEvent; // Cast to CustomEvent
-      this.presenter?.handleEvent(EVENTS.EVENT_ALL_SELECTED, customEvent);
+      this.presenter?.handleEvent(customEvent);
     });
 
     document.addEventListener(EVENTS.EVENT_ALL_UNSELECTED, (event) => {
       const customEvent = event as CustomEvent; // Cast to CustomEvent
-      this.presenter?.handleEvent(EVENTS.EVENT_ALL_UNSELECTED, customEvent);
+      this.presenter?.handleEvent(customEvent);
     });
 
     document.addEventListener(EVENTS.EVENT_ONE_SELECTED, (event) => {
       const customEvent = event as CustomEvent; // Cast to CustomEvent
-      this.presenter?.handleEvent(EVENTS.EVENT_ONE_SELECTED, customEvent);
+      this.presenter?.handleEvent(customEvent);
     });
 
     document.addEventListener(EVENTS.EVENT_ONE_UNSELECTED, (event) => {
       const customEvent = event as CustomEvent; // Cast to CustomEvent
-      this.presenter?.handleEvent(EVENTS.EVENT_ONE_UNSELECTED, customEvent);
+      this.presenter?.handleEvent(customEvent);
     });
 
     document.addEventListener(EVENTS.EVENT_DIALOG_OK_CLICKED, (event) => {
       const customEvent = event as CustomEvent; // Cast to CustomEvent
-      this.presenter?.handleEvent(EVENTS.EVENT_DIALOG_OK_CLICKED, customEvent);
+      this.presenter?.handleEvent(customEvent);
     });
   }
 
