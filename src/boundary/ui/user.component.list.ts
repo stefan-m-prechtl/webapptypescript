@@ -22,11 +22,11 @@ export default class UserComponentList extends LitElement {
 
   render() {
     return html`
-      <div class="w3-panel" >
-        <button id="btnRefresh" class="w3-button w3-light-gray" @click=${this.handleClickRefresh} >Aktualisieren</button>
-        <button id="btnClear"   class="w3-button w3-light-gray" @click=${this.handleClickClear} >Leeren</button>
-        <button id="btnEdit"    class="w3-button w3-light-gray" @click=${this.handleClickEdit} >Bearbeiten</button>
-        <button id="btnDelete"  class="w3-button w3-light-gray" @click=${this.handleClickDelete} >Löschen</button>
+      <div class="w3-panel">
+        <button id="btnRefresh" class="w3-button w3-light-gray" @click=${this.handleClickRefresh}>Aktualisieren</button>
+        <button id="btnClear" class="w3-button w3-light-gray" @click=${this.handleClickClear}>Leeren</button>
+        <button id="btnEdit" class="w3-button w3-light-gray" @click=${this.handleClickEdit}>Bearbeiten</button>
+        <button id="btnDelete" class="w3-button w3-light-gray" @click=${this.handleClickDelete}>Löschen</button>
       </div>
       <div class="w3-panel">
         <table class="w3-table w3-bordered" id="tblUser">
@@ -40,15 +40,22 @@ export default class UserComponentList extends LitElement {
           </thead>
           <tbody id="tblBody" @click="${this.handleClickTable}">
             ${this.users.map(
-      (user) => html` <tr data-id="${user.id}">
+              (user) => html` <tr data-id="${user.id}">
                 <td><input type="checkbox" class="row-checkbox" /></td>
                 <td>${user.name}</td>
                 <td>${user.firstname}</td>
                 <td>${user.lastname}</td>
               </tr>`,
-    )}
+            )}
           </tbody>
         </table>
+      </div>
+      <div id="userMenu" style="display:none; position:absolute; z-index:50;">
+        <div class="w3-card w3-light-blue w3-animate-opacity w3-padding">
+          <button class="w3-button w3-light-gray">Edit</button>
+          <button class="w3-button w3-light-gray">Lock</button>
+          <button class="w3-button w3-light-gray">Delete</button>
+        </div>
       </div>
     `;
   }
@@ -74,7 +81,7 @@ export default class UserComponentList extends LitElement {
       bubbles: true,
       composed: false,
     };
-    console.log(`dispatch event ${event}`)
+    console.log(`dispatch event ${event}`);
     this.dispatchEvent(new CustomEvent(event, options));
   }
 
@@ -101,6 +108,8 @@ export default class UserComponentList extends LitElement {
           }
         }
 
+        this.showContextMenu(target);
+
         const rowId = Number(row.getAttribute('data-id')!);
         const options = {
           bubbles: true,
@@ -110,8 +119,10 @@ export default class UserComponentList extends LitElement {
 
         if (target.checked) {
           this.dispatchEvent(new CustomEvent(EVENTS.EVENT_ONE_SELECTED, options) as CustomEvent<number>);
+          this.showContextMenu(target);
         } else {
           this.dispatchEvent(new CustomEvent(EVENTS.EVENT_ONE_UNSELECTED, options) as CustomEvent<number>);
+          this.hideContextMenu();
         }
         this.updateActionMenu();
       }
@@ -151,5 +162,18 @@ export default class UserComponentList extends LitElement {
 
     editButton.disabled = !anyChecked;
     deleteButton.disabled = !anyChecked;
+  }
+
+  showContextMenu(checkbox: HTMLInputElement) {
+    const menu = document.querySelector('#userMenu') as HTMLDivElement;
+    const rect = checkbox.getBoundingClientRect();
+    menu.style.top = `${rect.bottom + window.scrollY}px`;
+    menu.style.left = `${rect.right + 10 + window.scrollX}px`;
+    menu.style.display = 'block';
+  }
+
+  hideContextMenu() {
+    const menu = document.querySelector('#userMenu') as HTMLDivElement;
+    menu.style.display = 'none';
   }
 }
