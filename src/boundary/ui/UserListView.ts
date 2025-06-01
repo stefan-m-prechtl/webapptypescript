@@ -29,6 +29,15 @@ export default class UserListView {
 
   initEventHandler() {
 
+    // document.addEventListener('click', (event) => {
+    //   const target = event.target as HTMLElement;
+    //   const isMenu = target.closest('#ctxMenuUserList');
+    //   if (!isMenu) {
+    //     console.log("Hide Popup Menu");
+    //   };
+    // });
+
+
     document.addEventListener(EVENTS.EVENT_REFRESH_CLICKED, (event) => {
       const customEvent = event as CustomEvent; // Cast to CustomEvent
       this.presenter?.handleEvent(customEvent);

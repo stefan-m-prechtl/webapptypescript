@@ -29,7 +29,6 @@ export default class UserEditPresenter {
     const customEvent = event as CustomEvent;
     const user = customEvent.detail as User;
     this.view.show(user);
-    console.log('UserEditPresenter::onEditUser: ' + user.name);
 
     selectPageDirect('user-edit');
   }

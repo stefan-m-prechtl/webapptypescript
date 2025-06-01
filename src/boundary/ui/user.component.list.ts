@@ -5,40 +5,64 @@ import { EVENTS } from './user.constants';
 
 @customElement('user-list')
 export default class UserComponentList extends LitElement {
-  @property()
-  users: User[] = [];
-
-  @state()
-  allSelected = false;
 
   constructor(users: User[] = []) {
     super();
     this.users = users;
   }
 
+  @property()
+  users: User[] = [];
+
+  @state()
+  allSelected = false;
+  @state()
+  menuVisible = false;
+
+  willUpdate(changedProperties: Map<string, unknown>) {
+    if (changedProperties.has('users')) {
+      this.menuVisible = false;
+    }
+  }
+
+  updated(changedProperties: Map<string, unknown>) {
+    super.updated?.(changedProperties);
+
+    if (this.users.length === 0)
+    {
+      const checkboxAll = document.querySelector<HTMLInputElement>('#selectAll')!;
+      checkboxAll.checked=false;
+      checkboxAll.indeterminate = false;
+    }
+
+ }
+
+  
+
   createRenderRoot() {
     return this;
   }
 
   render() {
+    console.log(`call render with menuVisible=${this.menuVisible}`);
     return html`
-      <div class="w3-panel">
+      <div id="ctxMenuUserList" class="w3-panel">
         <button id="btnRefresh" class="w3-button w3-light-gray" @click=${this.handleClickRefresh}>Aktualisieren</button>
         <button id="btnClear" class="w3-button w3-light-gray" @click=${this.handleClickClear}>Leeren</button>
         <button id="btnEdit" class="w3-button w3-light-gray" @click=${this.handleClickEdit}>Bearbeiten</button>
         <button id="btnDelete" class="w3-button w3-light-gray" @click=${this.handleClickDelete}>Löschen</button>
       </div>
       <div class="w3-panel">
-        <table class="w3-table w3-bordered" id="tblUser">
+        <table class="w3-table w3-bordered" id="tblUser" @click="${this.handleClickTable}">
           <thead id="tblHead" @click=${this.handleSelectAllClick}>
             <tr class="w3-light-gray">
-              <th><input type="checkbox" id="selectAll" /></th>
+              <th><input type="checkbox" id="selectAll" class="row-checkbox"/></th>
               <th>Kennung</th>
               <th>Vorname</th>
               <th>Nachname</th>
             </tr>
           </thead>
-          <tbody id="tblBody" @click="${this.handleClickTable}">
+          <tbody id="tblBody" >
             ${this.users.map(
               (user) => html` <tr data-id="${user.id}">
                 <td><input type="checkbox" class="row-checkbox" /></td>
@@ -50,7 +74,7 @@ export default class UserComponentList extends LitElement {
           </tbody>
         </table>
       </div>
-      <div id="userMenu" style="display:none; position:absolute; z-index:50;">
+      <div id="userMenu" style="display: ${this.menuVisible ? 'block' : 'none'}; position:absolute; z-index:50;">
         <div class="w3-card w3-light-blue w3-animate-opacity w3-padding">
           <button class="w3-button w3-light-gray">Edit</button>
           <button class="w3-button w3-light-gray">Lock</button>
@@ -81,7 +105,6 @@ export default class UserComponentList extends LitElement {
       bubbles: true,
       composed: false,
     };
-    console.log(`dispatch event ${event}`);
     this.dispatchEvent(new CustomEvent(event, options));
   }
 
@@ -97,18 +120,19 @@ export default class UserComponentList extends LitElement {
         if (allChecked) {
           checkboxAll.checked = true;
           checkboxAll.indeterminate = false;
+          this.showContextMenu(target);
         } else {
           const noneChecked = Array.from(checkboxesRow).every((checkbox) => !checkbox.checked);
           if (noneChecked) {
             checkboxAll.checked = false;
             checkboxAll.indeterminate = false;
+            this.hideContextMenu();
           } else {
             checkboxAll.checked = false;
             checkboxAll.indeterminate = true;
+            this.showContextMenu(target);
           }
         }
-
-        this.showContextMenu(target);
 
         const rowId = Number(row.getAttribute('data-id')!);
         const options = {
@@ -119,10 +143,8 @@ export default class UserComponentList extends LitElement {
 
         if (target.checked) {
           this.dispatchEvent(new CustomEvent(EVENTS.EVENT_ONE_SELECTED, options) as CustomEvent<number>);
-          this.showContextMenu(target);
         } else {
           this.dispatchEvent(new CustomEvent(EVENTS.EVENT_ONE_UNSELECTED, options) as CustomEvent<number>);
-          this.hideContextMenu();
         }
         this.updateActionMenu();
       }
@@ -164,16 +186,23 @@ export default class UserComponentList extends LitElement {
     deleteButton.disabled = !anyChecked;
   }
 
-  showContextMenu(checkbox: HTMLInputElement) {
+  async showContextMenu(checkbox: HTMLInputElement) {
+
+    this.menuVisible =true;
+     // Wait for Lit to finish rendering
+    await this.updateComplete;
+
     const menu = document.querySelector('#userMenu') as HTMLDivElement;
     const rect = checkbox.getBoundingClientRect();
     menu.style.top = `${rect.bottom + window.scrollY}px`;
     menu.style.left = `${rect.right + 10 + window.scrollX}px`;
-    menu.style.display = 'block';
+    //menu.style.display = 'block';
+    
   }
 
   hideContextMenu() {
-    const menu = document.querySelector('#userMenu') as HTMLDivElement;
-    menu.style.display = 'none';
+    this.menuVisible =false;
+    //const menu = document.querySelector('#userMenu') as HTMLDivElement;
+    //menu.style.display = 'none';
   }
 }
